@@ -1,0 +1,62 @@
+.Message {
+    display:flex;
+    flex-flow: row;
+    width: 100%;
+    min-height: inherit;
+    overflow: hidden;
+    background-color: transparent;
+    /*white-space: nowrap;*/
+    position: relative;
+    height:contain;
+}
+
+.UserAvtr {
+
+}
+
+.Texts {
+    margin-left: 10px;
+    display: flex;
+    flex-flow: column;
+    justify-content:right;
+    align-content: center;
+    align-items:flex-start;
+    width: inherit;
+    height: auto;
+}
+.Photo {
+    border: 1px black solid;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-image-outset: 0px 0px 0px 0px;
+    width: 35px;
+    height: 35px;
+}
+
+.UserNick {
+    font-size: 8px;
+    color: white;
+    background-size: cover;
+    background: linear-gradient(10deg, darkgreen,green,lime);
+    height: 20px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin:0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.MessageText {
+    background-color: rgb(0, 0, 0, 0.25);
+    padding:3px;
+    color: white;
+    mask-position: bottom;
+    font-size: xx-small;
+    border-radius: 10px;
+    max-width: calc(inherit, -10px);
+    line-break:anywhere;
+    inline-size: calc(95%);
+    height: auto;
+}
+
