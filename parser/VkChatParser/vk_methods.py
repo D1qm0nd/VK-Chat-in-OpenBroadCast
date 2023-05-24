@@ -4,6 +4,7 @@ from vk_api.keyboard import VkKeyboardColor,  VkKeyboard
 import constants
 import json
 import time 
+import os
 
 def responseErrorHandler(func):
 	def handler(self):
@@ -98,20 +99,28 @@ class VKBot():
 						data['user']['name'] = user_data['first_name'] + ' ' + user_data['last_name']
 						data['user']['avatar'] = user_data['photo'] 
 
+
+
 						if len(response['updates'][0]['object']['message']['attachments']):
-							data['message']['text'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['text'],
-							data['message']['img'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['sizes'][0]['url'],
-							data['message']['type'] = 'photo'
+							###########????
+							try:
+								data['message']['text'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['text'],
+								data['message']['img'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['sizes'][0]['url'],
+								data['message']['type'] = 'photo'
+							except:
+								pass
 						else:
 							data['message']['text'] = message
 							data['message']['type'] = 'message'
 
-						with open("C:/Users/Max/source/repos/D1qm0nd/ChatAvtomat2-0/view/src/logs.json", 'w') as f:
+						with open(os.getcwd()+r"\..\..\view\src\logs.json", 'w') as f:
 							json_data.append(copy.deepcopy(data))
 							try:
+								while len(json_data) > 10:
+									json_data.pop(0);
 								json.dump(json_data, f, indent=4)
 								f.close()
-								self.sendMessage(self.getChatId(response), '', self.getPollingBoard())
+								self.sendMessage(self.getChatId(response), ' ', self.getPollingBoard())
 							except:
 								f.close()
 
