@@ -106,11 +106,16 @@ class VKBot():
 							data['message']['text'] = message
 							data['message']['type'] = 'message'
 
-						with open("../../view/src/logs.json", 'w') as f:
+						with open("C:/Users/Max/source/repos/D1qm0nd/ChatAvtomat2-0/view/src/logs.json", 'w') as f:
 							json_data.append(copy.deepcopy(data))
-							json.dump(json_data, f, indent=4)
-							f.close()
-						self.sendMessage(self.getChatId(response), 'sd', self.getPollingBoard())
+							try:
+								json.dump(json_data, f, indent=4)
+								f.close()
+								self.sendMessage(self.getChatId(response), '', self.getPollingBoard())
+							except:
+								f.close()
+
+
 
 	@responseErrorHandler
 	def sendResponse(self):
