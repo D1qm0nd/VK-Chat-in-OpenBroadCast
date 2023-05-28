@@ -1,0 +1,13 @@
+.ChatArea {
+    width: 450px;
+    height: 600px;
+    overflow-x: scroll;
+    overflow-x: hidden;
+    background: #808080;
+    border: solid 1px;
+    border-radius: 10px;
+    padding: 15px;
+    scrollbar-width: thin;
+    scrollbar-width: thin;
+    scrollbar-base-color: darkslategrey;
+}

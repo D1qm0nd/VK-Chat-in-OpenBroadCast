@@ -121,12 +121,6 @@ class VKBot():
 
 						_Logger = Logger.Logger()
 
-						if not _Logger.log(os.getcwd()+r".\logs.json",copy.deepcopy(data),'a'):
-							print("Не удалось добавить лог в главный лог файл")
-
-						json_data.append(copy.deepcopy(data))
-						while len(json_data) > 10:
-							json_data.pop(0)
 						if not _Logger.log(os.getcwd() + r"\..\..\view\src\viewlogs.json", json_data, 'w'):
 							print("Не удалось добавить лог в лог файл для вывода")
 
