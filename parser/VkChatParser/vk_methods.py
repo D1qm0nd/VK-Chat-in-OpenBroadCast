@@ -77,7 +77,7 @@ class VKBot():
 	
 	def startPolling(self):
 		message = '' 
-		json_data = []
+		json_data = [] #Array server answers
 		
 		while message.capitalize() != self._commands[1]:
 			response = self.sendResponse()
@@ -121,13 +121,14 @@ class VKBot():
 
 						_Logger = Logger.Logger()
 
-						if not _Logger.log(os.getcwd()+r".\logs.json",copy.deepcopy(data),'a'):
+						if not _Logger.log(os.getcwd()+r".\logs.json",copy.deepcopy(data),'a+'):
 							print("Не удалось добавить лог в главный лог файл")
 
-						json_data.append(copy.deepcopy(data))
-						while len(json_data) > 10:
-							json_data.pop(0)
-						if not _Logger.log(os.getcwd() + r"\..\..\view\src\viewlogs.json", json_data, 'w'):
+						json_copy = json_data.copy()
+
+						while len(json_copy) > 10:
+							json_copy.pop(0)
+						if not _Logger.log(os.getcwd() + r"\..\..\view\src\viewlogs.json", json_copy, 'w+'):
 							print("Не удалось добавить лог в лог файл для вывода")
 
 
