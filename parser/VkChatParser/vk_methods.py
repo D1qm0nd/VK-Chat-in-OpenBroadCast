@@ -5,6 +5,7 @@ import constants
 import json
 import time 
 import os
+import Logger
 
 def responseErrorHandler(func):
 	def handler(self):
@@ -29,8 +30,8 @@ class VKBot():
 		self.ts = 1
 
 		self._commands = [
-								'Начать логирование',
-								'Остановить'
+			'Начать логирование',
+			'Остановить'
 		]
 
 	def checkForEvent(self, response):
@@ -44,9 +45,12 @@ class VKBot():
 					self.sendMessage(self.getChatId(response), "Нажмите на кнопку, чтобы начать работу бота", self.getMainMenuBoard())
 
 	def sendMessage(self, chat_id, text='', board=None):
-		message = requests.post(self.URL + 'messages.send?peer_id={}&random_id=0&message={}&keyboard={}&access_token={}&v=5.110'.format(chat_id, text, board.get_keyboard(), self.TOKEN)); 
+		message = requests.post(self.URL + f'messages.send?peer_id={chat_id}'+
+										   f'&random_id=0&message={text}'+
+										   f'&keyboard={board.get_keyboard()}'+
+										   f'&access_token={self.TOKEN}&v=5.110')
 		self.ts += 1
-		print(f'[{time.ctime()}] Отправлен ответ на сообщение пользователя id' + str(chat_id) + ', ответ сервера: {}'.format(message.json()), '\n')
+		print(f'[{time.ctime()}] Отправлен ответ на сообщение пользователя id {str(chat_id)}, ответ сервера: {message.json()}\n')
 		return message
 
 	def getChatId(self, response):
@@ -70,7 +74,7 @@ class VKBot():
 		bot_keyboard = VkKeyboard(one_time=True, inline=False)
 		bot_keyboard.add_button(self._commands[1], color=VkKeyboardColor.NEGATIVE)
 		return bot_keyboard
-
+	
 	def startPolling(self):
 		message = '' 
 		json_data = []
@@ -94,7 +98,8 @@ class VKBot():
 					if response['updates'][0]['type'] == 'message_new':
 						self.ts += 1
 						message = response['updates'][0]['object']['message']['text']
-						user_data = requests.get(self.URL + 'users.get?access_token={}&name_case=nom&user_ids={}&fields=photo&v=5.110'.format(self.TOKEN, self.getUsrId(response))).json()
+						user_data = requests.get(self.URL + f'users.get?access_token={self.TOKEN}'+
+															f'&name_case=nom&user_ids={self.getUsrId(response)}&fields=photo&v=5.110').json()
 						user_data = user_data['response'][0]
 						data['user']['name'] = user_data['first_name'] + ' ' + user_data['last_name']
 						data['user']['avatar'] = user_data['photo'] 
@@ -102,7 +107,6 @@ class VKBot():
 
 
 						if len(response['updates'][0]['object']['message']['attachments']):
-							###########????
 							try:
 								data['message']['text'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['text'],
 								data['message']['img'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['sizes'][0]['url'],
@@ -113,16 +117,19 @@ class VKBot():
 							data['message']['text'] = message
 							data['message']['type'] = 'message'
 
-						with open(os.getcwd()+r"\..\..\view\src\logs.json", 'w') as f:
-							json_data.append(copy.deepcopy(data))
-							try:
-								while len(json_data) > 10:
-									json_data.pop(0);
-								json.dump(json_data, f, indent=4)
-								f.close()
-								self.sendMessage(self.getChatId(response), ' ', self.getPollingBoard())
-							except:
-								f.close()
+						json_data.append(copy.deepcopy(data))
+
+						_Logger = Logger.Logger()
+
+						if not _Logger.log(os.getcwd()+r".\logs.json",copy.deepcopy(data),'a'):
+							print("Не удалось добавить лог в главный лог файл")
+
+						json_data.append(copy.deepcopy(data))
+						while len(json_data) > 10:
+							json_data.pop(0)
+						if not _Logger.log(os.getcwd() + r"\..\..\view\src\viewlogs.json", json_data, 'w'):
+							print("Не удалось добавить лог в лог файл для вывода")
+
 
 	@responseErrorHandler
 	def sendResponse(self):
