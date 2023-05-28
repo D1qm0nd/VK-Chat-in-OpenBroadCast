@@ -70,7 +70,7 @@ class VKBot():
 		bot_keyboard = VkKeyboard(one_time=True, inline=False)
 		bot_keyboard.add_button(self._commands[1], color=VkKeyboardColor.NEGATIVE)
 		return bot_keyboard
-	
+
 	def startPolling(self):
 		message = '' 
 		json_data = []
@@ -123,8 +123,6 @@ class VKBot():
 								self.sendMessage(self.getChatId(response), ' ', self.getPollingBoard())
 							except:
 								f.close()
-
-
 
 	@responseErrorHandler
 	def sendResponse(self):
