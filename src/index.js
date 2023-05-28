@@ -4,14 +4,7 @@ import './index.css';
 import Message from './Message';
 import Image from './Image'
 import reportWebVitals from './reportWebVitals';
-import data from './logs.json';
-
-/*const messages = [{ id: '1', avatar: 'https://i.imgur.com/2ylJq3q.jpg', name: 'Listik', text: 'Hello, world!'},
-                  { id: '2', avatar: 'https://i.imgur.com/2ylJq3q.jpg', name: 'Listik', text: 'It`s me' },
-                  { id: '3', avatar: 'https://i.imgur.com/2ylJq3q.jpg', name: 'Listik', text: 'El Psy Congro' },
-                  { id: '4', avatar: 'https://i.imgur.com/2ylJq3q.jpg', name: 'Listik', text: 'loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong text' }
-
-];*/
+import data from './viewlogs.json';
 
 const messageList = data.map(message =>
     <Message img={message.user.avatar} userName={message.user.name} message={message.message.text} />

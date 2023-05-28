@@ -113,16 +113,22 @@ class VKBot():
 							data['message']['text'] = message
 							data['message']['type'] = 'message'
 
-						with open(os.getcwd()+r"\..\..\view\src\logs.json", 'w') as f:
-							json_data.append(copy.deepcopy(data))
+						json_data.append(copy.deepcopy(data))
+
+						with open(os.getcwd()+r".\logs.json", 'a') as logsf:
+							json.dump(copy.deepcopy(data), logsf, indent=4)
+							logsf.close()
+							
+						with open(os.getcwd()+r"\..\..\view\src\viewlogs.json", 'w') as viewlogsf:
+							#json_data.append(copy.deepcopy(data))
 							try:
 								while len(json_data) > 10:
 									json_data.pop(0);
-								json.dump(json_data, f, indent=4)
-								f.close()
+								json.dump(json_data, viewlogsf, indent=4)
+								viewlogsf.close()
 								self.sendMessage(self.getChatId(response), ' ', self.getPollingBoard())
 							except:
-								f.close()
+								viewlogsf.close()
 
 
 
