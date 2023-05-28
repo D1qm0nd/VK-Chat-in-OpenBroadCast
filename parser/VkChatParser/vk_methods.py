@@ -98,7 +98,8 @@ class VKBot():
 					if response['updates'][0]['type'] == 'message_new':
 						self.ts += 1
 						message = response['updates'][0]['object']['message']['text']
-						user_data = requests.get(self.URL + 'users.get?access_token={}&name_case=nom&user_ids={}&fields=photo&v=5.110'.format(self.TOKEN, self.getUsrId(response))).json()
+						user_data = requests.get(self.URL + f'users.get?access_token={self.TOKEN}'+
+															f'&name_case=nom&user_ids={self.getUsrId(response)}&fields=photo&v=5.110').json()
 						user_data = user_data['response'][0]
 						data['user']['name'] = user_data['first_name'] + ' ' + user_data['last_name']
 						data['user']['avatar'] = user_data['photo'] 
