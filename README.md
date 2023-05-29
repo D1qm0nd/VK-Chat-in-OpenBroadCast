@@ -2,7 +2,7 @@
 ## 1. Node.js
 ### 1.1. Download link: https://nodejs.org/en/download
 ## 2. React
-## 2.1. Open CMD
+### 2.1. Open CMD
 ### 2.2. Execute CMD command: npm install -g create-react-app
 ### 2.3. Change directory to .\ChatAvtomat2-0
 ### 2.4. Execute CMD command npm create-react-app view
