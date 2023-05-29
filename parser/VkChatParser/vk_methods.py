@@ -102,15 +102,14 @@ class VKBot():
 															f'&name_case=nom&user_ids={self.getUsrId(response)}&fields=photo&v=5.110').json()
 						user_data = user_data['response'][0]
 						data['user']['name'] = user_data['first_name'] + ' ' + user_data['last_name']
-						data['user']['avatar'] = user_data['photo'] 
+						data['user']['avatar'] = user_data['photo']
 
 
 
 						if len(response['updates'][0]['object']['message']['attachments']):
 							try:
-								data['message']['text'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['text'],
+								data['message']['text'] = response['updates'][0]['object']['message']['text'] + f" [{response['updates'][0]['object']['message']['attachments'][0]['type']}]",
 								data['message']['img'] = response['updates'][0]['object']['message']['attachments'][0]['photo']['sizes'][0]['url'],
-								data['message']['type'] = 'photo'
 							except:
 								pass
 						else:
@@ -145,5 +144,3 @@ class VKBot():
 			resp = self.sendResponse()
 			if 'failed' not in resp:
 				self.checkForEvent(resp) 
-
-
