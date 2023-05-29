@@ -1,4 +1,4 @@
-# VK-Chat-in-OpenBroadCast
+# VK Chat in OpenBroadCast
 ## 1. Node.js
 ### 1.1. Download link: https://nodejs.org/en/download
 ## 2. React
